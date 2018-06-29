@@ -14,6 +14,7 @@ package golog
 
 import (
 	"fmt"
+	"strings"
 	"io"
 	"os"
 	"sync"
@@ -72,6 +73,41 @@ func (self *Logger) SetParts(f ...PartFunc) {
 
 	self.parts = []PartFunc{logPart_ColorBegin}
 	self.parts = append(self.parts, f...)
+	self.parts = append(self.parts, logPart_Text, logPart_ColorEnd, logPart_Line)
+}
+//%L LogPart_Level
+//%T LogPart_TimeMS
+//%t LogPart_Time
+//%F LogPart_LongFileName
+//%f LogPart_ShortFileName
+//%N LogPart_Name
+//%P LogPart_Pid
+//%G LogPart_Gid
+func (self *Logger) SetPartsByString(s string) {
+
+	self.parts = []PartFunc{logPart_ColorBegin}
+	
+	for _,v := range strings.Fields(s) {
+		switch v {
+		case "%L":
+			self.parts = append(self.parts, LogPart_Level)
+		case "%T":
+			self.parts = append(self.parts, LogPart_TimeMS)
+		case "%t":
+			self.parts = append(self.parts, LogPart_Time)
+		case "%F":
+			self.parts = append(self.parts, LogPart_LongFileName)
+		case "%f":
+			self.parts = append(self.parts, LogPart_ShortFileName)
+		case "%N":
+			self.parts = append(self.parts, LogPart_Name)
+		case "%P":
+			self.parts = append(self.parts, LogPart_Pid)
+		case "%G":
+			self.parts = append(self.parts, LogPart_Gid)
+		}
+	}
+	
 	self.parts = append(self.parts, logPart_Text, logPart_ColorEnd, logPart_Line)
 }
 
