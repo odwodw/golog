@@ -44,6 +44,7 @@ func main() {
 func logtest() {
 
 
+	golog.Println("我是新加的函数打印的日志")
 	log := golog. New("test")
 	log1 := golog.New("test1")
 

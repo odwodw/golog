@@ -65,6 +65,11 @@ func New(name string) *Logger {
 	return l
 }
 
+var logDefault =New("")
+func Println(v...interface{}) {
+        logDefault.Log(Level_Info, fmt.Sprintln(v...))
+}
+
 func (self *Logger) EnableColor(v bool) {
 	self.enableColor = v
 }
