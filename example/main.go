@@ -1,6 +1,6 @@
 package main
 
-import "github.com/davyxu/golog"
+import "../../golog"
 
 var log = golog.New("test2")
 
@@ -36,8 +36,23 @@ const colorStyle = `
 `
 
 func main() {
+	logtest()
+	go logtest()
+	go logtest()
+}
+
+func logtest() {
+
+
+	log := golog. New("test")
+	log1 := golog.New("test1")
 
 	golog.SetColorDefine(".", colorStyle)
+/*	golog.SetOutputToFile(".", "a.log")
+	golog.SetOutputToFile("test", "a.log")
+	golog.SetOutputToFile("test1", "b.log")
+*/
+	//golog.SetLevelByString("test*", "info")
 
 	// 默认颜色是关闭的
 	log.SetParts()
@@ -56,14 +71,28 @@ func main() {
 	log.SetParts(golog.LogPart_Level, golog.LogPart_Name, golog.LogPart_Time, golog.LogPart_ShortFileName)
 	log.Debugln()
 	log.Debugf("[DB] DB日志是绿色的，从文件读取，按文字匹配的， 完整的日志样式")
+	log.Debugf("panic: panic日志是红色的 ，从文件读取，按文字匹配的， 完整的日志样式")
+	log.Debugf("#tcp.listen listen日志是蓝色的 ，从文件读取，按文字匹配的， 完整的日志样式")
+	log.Debugf("#tcp.listen listen日志是蓝色的 ，从文件读取，按文字匹配的， 完整的日志样式")
+	log1.Debugf("#tcp.listen listen日志是蓝色的 ，从文件读取，按文字匹配的， 完整的日志样式")
+	log1.Infof("#tcp.listen listen日志是蓝色的 ，从文件读取，按文字匹配的， 完整的日志样式")
 
 	log.SetParts(golog.LogPart_TimeMS, golog.LogPart_LongFileName, func(l *golog.Logger) {
+		l.SetParts(golog.LogPart_Level, golog.LogPart_Name, golog.LogPart_Time, golog.LogPart_ShortFileName)
 		l.WriteRawString("固定头部: ")
 	})
+	log.Debugf("自定义紫色 + 固定头部内容2")
+	log.SetParts(func(l *golog.Logger) {
+		l.SetParts(golog.LogPart_Level, golog.LogPart_Name, golog.LogPart_TimeMS, golog.LogPart_ShortFileName)
+		l.WriteRawString("固定头部: ")
+	})
+	log.SetPartsByString("%L %N %T %f %P %G")
 
 	log.SetColor("purple")
 
-	log.Debugf("自定义紫色 + 固定头部内容")
+	log.Debugf("自定义紫色 + 固定头部内容2")
+	log.Debugf("自定义紫色 + 固定头部内容2")
+	log.Debugf("自定义紫色 + 固定头部内容2")
 	log.Debugf("自定义紫色 + 固定头部内容2")
 
 }
