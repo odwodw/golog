@@ -13,10 +13,26 @@
 
 * 根据内容标记日志颜色
 
+# fork-修改说明(odwodw)
+
+* 基于github.com/davyxu/golog修改
+
+* 增加Pid,GoId日志输出
+
+* 增加字符串格式设置parts
+** %L LogPart_Level
+** %T LogPart_TimeMS
+** %t LogPart_Time
+** %F LogPart_LongFileName
+** %f LogPart_ShortFileName
+** %N LogPart_Name
+** %P LogPart_Pid
+** %G LogPart_Gid
+
 
 # 安装方法
 
-	go get github.com/davyxu/golog
+	go get github.com/odwodw/golog
 
 # 使用方法
 
